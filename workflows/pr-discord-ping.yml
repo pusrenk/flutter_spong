@@ -1,0 +1,26 @@
+name: Trigger Discord Reviewer Ping
+
+on:
+  pull_request:
+    types: [review_requested, edited]
+
+jobs:
+  extract-reviewers:
+    runs-on: ubuntu-latest
+    outputs:
+      reviewers: ${{ steps.get-reviewers.outputs.reviewers }}
+    steps:
+      - name: Extract reviewers from event
+        id: get-reviewers
+        run: |
+          reviewers=$(echo '${{ toJSON(github.event.pull_request.requested_reviewers) }}' | jq -r '.[].login' | tr '\n' ' ')
+          echo "reviewers=$reviewers" >> $GITHUB_OUTPUT
+          echo "Found reviewers: $reviewers"
+
+  notify:
+    needs: extract-reviewers
+    uses: pusrenk/discord-action/.github/workflows/notify-reviewers.yml@main
+    with:
+      pr_url: ${{ github.event.pull_request.html_url }}
+      reviewers: ${{ needs.extract-reviewers.outputs.reviewers }}
+    secrets: inherit
