@@ -21,8 +21,8 @@ Follow the official documentation of [Flutter](https://docs.flutter.dev/get-star
 
 ##### ADB
 - adb devices                     : list connected devices 
-- adb connect <ip>:<port>         : connect devices   
-- adb pair <ip>:<port>            : pair devices over wifi
+- adb connect (ip):(port)         : connect devices   
+- adb pair (ip):(port)            : pair devices over wifi
 - adb disconnect                  : disconnect all devices
 - adb tcpip 5555                  : make static port
 - adb kill-server                 : stop the adb server
@@ -90,4 +90,4 @@ I recommend to use wireless method **(method 3)** since that is the most conveni
 
     - You can see your phone IP & Port there, but since we already make static Port which is easier to connect, we can ignore the phone Port
 
-    - On your run 'adb connect <ip>:<port>'
+    - On your run 'adb connect (ip):(port)'
